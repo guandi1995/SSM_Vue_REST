@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssm.asyn.mapper.AdminMapper">
+    <select id="fetchAdmins" resultType="com.ssm.asyn.pojo.Admin">
+        select * from adminlogin
+    </select>
+
+    <insert id="insertAdmin" parameterType="com.ssm.asyn.pojo.Admin">
+        insert into adminlogin (id, username, password, name) values
+            (#{id}, #{username}, #{password}, #{name})
+    </insert>
+
+    <delete id="deleteAdminByID">
+        delete from adminlogin where id = #{id}
+    </delete>
+
+    <select id="fetchAdminByID" resultType="com.ssm.asyn.pojo.Admin">
+        select * from adminlogin where id = #{id}
+    </select>
+
+    <update id="updateAdmin" parameterType="com.ssm.asyn.pojo.Admin">
+        update adminlogin set username=#{username}, password=#{password}, name=#{name}
+        where id = #{id}
+    </update>
+</mapper>
