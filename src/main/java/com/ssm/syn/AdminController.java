@@ -7,5 +7,6 @@ package com.ssm.syn;
 public class AdminController {
     public static void main(String[] args) {
         System.out.println("first test");
+        System.out.println("first test");
     }
 }
