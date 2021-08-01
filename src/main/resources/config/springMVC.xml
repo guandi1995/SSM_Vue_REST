@@ -15,11 +15,13 @@
 
     <!--    加载MVC注解驱动-->
     <mvc:annotation-driven/>
+    <!--自动不拦截静态文件-->
+    <mvc:default-servlet-handler/>
 
     <!--    配置ViewResolver:配置prefix, suffix, viewClass-->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/view"/>
-        <property name="suffix" value=".jsp"/>
+        <property name="suffix" value=".html"/>
         <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
     </bean>
 

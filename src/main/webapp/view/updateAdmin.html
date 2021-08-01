@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>update Admin</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+</head>
+<body>
+<script type="text/javascript" src="https://unpkg.com/vue/dist/vue.js"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<div id="app">
+
+  <div class="jumbotron" style="text-align: center">
+    <h1 class="display-4">UPDATE PAGE</h1>
+    <hr class="my-4">
+    <a class="btn btn-primary btn-lg" href="/SSM_Vue_CRUD_REST/view/fetchAdmins.html" role="button">
+      Return Main Page
+    </a>
+  </div>
+
+  <div style="margin-left: 30%; margin-right: 30%">
+    <div class="form-group">
+      <label>ID</label>
+      <input class="form-control" v-model="admin.id">
+    </div>
+    <div class="form-group">
+      <label>Username</label>
+      <input class="form-control" v-model="admin.username" >
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" class="form-control" v-model="admin.password" >
+    </div>
+    <div class="form-group">
+      <label>Name</label>
+      <input class="form-control"  v-model="admin.name">
+    </div>
+    <button @click="updateAdmin()" class="btn btn-primary">Submit</button>
+  </div>
+
+</div>
+
+<script>
+  // 获取URL中的id参数
+  var id = window.location.href.split("=")[1];
+
+  //加载fetchAdminByID的数据回显
+  $.ajax({
+    url: "/SSM_Vue_CRUD_REST/admin/fetchAdminByID?id="+id,
+    type: "GET",
+    dataType: "json",
+    success:function (results){
+      console.log(results)
+      app.admin = results.returnData;
+    }
+  })
+
+  var app = new Vue({
+    el:"#app",
+    data:{
+      admin:{}
+    },
+    methods:{
+      updateAdmin(){
+        $.ajax({
+          url: "/SSM_Vue_CRUD_REST/admin/updateAdmin",
+          type: "POST",
+          dataType: "json",
+          data: app.admin,
+          success:function (results){
+            window.location.href = "/SSM_Vue_CRUD_REST/view/fetchAdmins.html";
+          }
+        })
+      },
+    }
+  });
+
+
+
+
+
+</script>
+</body>
+</html>

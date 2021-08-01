@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>fetch Admins</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+</head>
+<body>
+<script type="text/javascript" src="https://unpkg.com/vue/dist/vue.js"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+<div id="app">
+
+    <a class="btn btn-success" href="/SSM_Vue_CRUD_REST/view/insertAdmin.html">
+        <span class="glyphicon glyphicon-plus-sign">INSERT</span>
+    </a>
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Username</th>
+            <th scope="col">Password</th>
+            <th scope="col">Name</th>
+            <th scope="col">Operations</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr v-for="(admin, index) in admins">
+                <th scope="row">{{admin.id}}</th>
+                <td>{{admin.username}}</td>
+                <td>{{admin.password}}</td>
+                <td>{{admin.name}}</td>
+                <td>
+                    <button type="button" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-pencil" @click="fetchAdminByID(admin.id)">UPDATE</span>
+                    </button>
+                    <button type="button" class="btn btn-danger">
+                        <span class="glyphicon glyphicon-trash" @click="deleteAdmin(admin.id)">DELETE</span>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    var app = new Vue({
+        el:"#app",
+        data:{
+            admins:[]//后台的json数据存储在该model中
+        },
+        methods:{
+            deleteAdmin(id){
+                $.ajax({
+                    url: "/SSM_Vue_CRUD_REST/admin/deleteAdmin?id="+id,
+                    type: "GET",
+                    dataType: "json",
+                    success:function (results){
+                        console.log(results);
+                        //删除成功后，刷新页面
+                        window.location.reload();
+                    }
+                })
+            },
+            fetchAdminByID(id){
+                window.location.href="/SSM_Vue_CRUD_REST/view/updateAdmin.html?id="+id;
+            }
+        }
+    });
+
+    $.ajax({
+        url: "/SSM_Vue_CRUD_REST/admin/fetchAdmins",
+        type: "GET",
+        dataType: "json",
+        success:function (results){
+            console.log(results);
+            //将后台的json数据赋值到vue的data:{admin[]}数组中
+            app.admins = results.returnData;
+        }
+    })
+</script>
+
+</body>
+</html>

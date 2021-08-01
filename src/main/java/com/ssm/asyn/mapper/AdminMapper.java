@@ -10,6 +10,6 @@ public interface AdminMapper {
     List<Admin> fetchAdmins();
     int insertAdmin(Admin admin);
     int deleteAdminByID(Integer id);
-    List<Map> fetchAdminByID(Integer id);
+    List<Admin> fetchAdminByID(Integer id);
     int updateAdmin(Admin admin);
 }

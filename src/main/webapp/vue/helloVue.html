@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script type="text/javascript" src="https://unpkg.com/vue/dist/vue.js"></script>
+<div id="app">
+    <h1>{{msg}}</h1>
+    <h1 v-text="msg"></h1>
+
+    <ul>
+        <li v-for="(name, index) in arr">{{name}}----{{index}}</li>
+    </ul>
+
+    <table>
+        <tr v-for="(student, index) in students">
+            <td>{{student.id}}</td>
+            <td>{{student.name}}</td>
+            <td>{{student.school}}</td>
+            <td>{{student.age}}</td>
+        </tr>
+    </table>
+
+    <h2 v-if=" condition=='' ">goodbye</h2>
+    <h2 v-else>hello</h2>
+
+    username:<input v-model="info.username">
+    password:<input v-model="info.password"><br>
+    {{info.username}}----{{info.password}}<br>
+
+    <button v-on:click="vueMethod1()">Click to show method 1</button>
+    <button @click="vueMethod2()">Click to show method 2</button>
+
+</div>
+
+<script>
+    var app = new Vue({
+        el:"#app",
+        data:{
+            msg:"hello vue!!!",//v-text指令或{{}}提取
+            arr:["Di Guan", "Sijia Li", "DJ"],//v-for指令
+            students:[
+                {id:1,name:"Di",school:"Purdue",age:26},
+                {id:2,name:"Sijia",school:"Iowa State",age:25},
+                {id:3,name:"DJ",school:"None",age:5}
+            ],//v-for指令
+            condition:"blur blur",//v-if指令
+            info:{}//v-model指令
+        },
+        methods:{
+            vueMethod1:function () {
+                alert("method 1");
+            },
+            vueMethod2:function (){
+                alert("method 2");
+            }
+        }
+    });
+</script>
+</body>
+</html>

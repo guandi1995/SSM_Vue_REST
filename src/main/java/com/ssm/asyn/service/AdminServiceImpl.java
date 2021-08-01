@@ -2,6 +2,7 @@ package com.ssm.asyn.service;
 
 import com.ssm.asyn.mapper.AdminMapper;
 import com.ssm.asyn.pojo.Admin;
+import com.ssm.asyn.pojo.ReturnResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,27 +19,58 @@ public class AdminServiceImpl implements AdminService{
     private AdminMapper adminMapper;
 
     @Override
-    public List<Admin> fetchAdmins() {
-        return adminMapper.fetchAdmins();
+    public ReturnResult fetchAdmins() {
+        try{
+            List<Admin> admins = adminMapper.fetchAdmins();
+            return new ReturnResult(true,"fetch successfully", admins);
+        }catch (Exception e){
+            return new ReturnResult(true, "fail to fetch");
+        }
     }
 
     @Override
-    public int insertAdmin(Admin admin) {
-        return 0;
+    public ReturnResult insertAdmin(Admin admin) {
+        try {
+            adminMapper.insertAdmin(admin);
+            return new ReturnResult(true, "insert successfully");
+        }catch (Exception e){
+            return new ReturnResult(false, "fail to insert");
+        }
     }
 
     @Override
-    public int deleteAdminByID(Integer id) {
-        return 0;
+    public ReturnResult deleteAdminByID(Integer id) {
+        try {
+            adminMapper.deleteAdminByID(id);
+            return new ReturnResult(true, "delete successfully");
+        }catch (Exception e){
+            return new ReturnResult(false, "fail to delete");
+        }
     }
 
     @Override
-    public List<Map> fetchAdminByID(Integer id) {
-        return null;
+    public ReturnResult fetchAdminByID(Integer id) {
+        try {
+            List<Admin> admins = adminMapper.fetchAdminByID(id);
+            if (admins.size()>0){
+                Admin admin = admins.get(0);
+                return new ReturnResult(true, "fetch successfully", admin);
+            }else {
+                return new ReturnResult(false,"no result found");
+            }
+        }catch (Exception e){
+            return new ReturnResult(false,"fail to fetch");
+        }
     }
 
     @Override
-    public int updateAdmin(Admin admin) {
-        return 0;
+    public ReturnResult updateAdmin(Admin admin) {
+        try {
+            adminMapper.updateAdmin(admin);
+            return new ReturnResult(true, "update successfully");
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ReturnResult(false, "fail to update");
+        }
     }
 }
